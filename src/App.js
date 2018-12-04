@@ -14,8 +14,9 @@ class App extends Component {
     };
 
     handleTextClick(id){
+        alert(id)
         const posts = this.state.posts.map(post =>{
-            if(post.id == id) {
+            if(post.id === id) {
                 post.color = 'green'
             }
             return post
@@ -33,9 +34,40 @@ class App extends Component {
                     id={post.id}
                     color={post.color}
                     turnMeGreen={(id) => this.handleTextClick(id)}
+                    editMe = {(index) => this.editPost(index)}
                 />
             )
         }).reverse()
+    }
+
+    maxID = () => {
+        return this.state.posts.reduce( (acc,currentValue) => {
+
+            if(acc<currentValue.id){
+                return  currentValue.id
+            } 
+            return acc
+        },0)
+    }
+    // needed a way to make sure duplicate IDs weren't assigned. 
+
+
+    editPost = (id) => {
+        const index = this.state.posts.findIndex( (post, index) => {
+            return post.id == id
+        })
+        // find array possition given an id
+        const deletedElementArray = this.state.posts.slice();
+        deletedElementArray.splice(index,1)
+        // delete that post
+        this.setState({
+            postInput : this.state.posts[index].text,
+            userNameInput : this.state.posts[index].author,
+            // set input fields equal to that post 
+
+            posts : deletedElementArray,
+            // reflect the deleted post in the state
+        }) 
     }
 
     handlePostInputChange(e){
@@ -49,7 +81,8 @@ class App extends Component {
         const newPost = {
             author: this.state.userNameInput,
             text: this.state.postInput,
-            id: this.state.posts.length + 1,
+            id: this.maxID() + 1,
+            // new way to assign IDs, assures no duplicate IDs
             time: new Date()
         };
         const posts = this.state.posts.map(post => post);
