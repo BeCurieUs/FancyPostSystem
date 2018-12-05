@@ -15,6 +15,5 @@ class Post extends Component {
     }
 }
 
-
-
+//messed up with master stuff, new code is the button, the on click in that button and the emoji Component
 export default Post;
