@@ -14,7 +14,6 @@ class App extends Component {
     };
 
     handleTextClick(id){
-        alert(id)
         const posts = this.state.posts.map(post =>{
             if(post.id === id) {
                 post.color = 'green'
@@ -50,6 +49,8 @@ class App extends Component {
         },0)
     }
     // needed a way to make sure duplicate IDs weren't assigned. 
+
+    
 
 
     editPost = (id) => {
